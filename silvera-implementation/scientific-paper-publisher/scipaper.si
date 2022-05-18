@@ -1,0 +1,30 @@
+import "setup.si"
+import "user.si"
+
+service SciPaper {
+    service_registry=ServiceRegistry
+
+    api {
+
+        @crud
+        typedef SciPaper[
+            @required str author
+            @required str title
+            @required list<Section> sections
+        ]
+
+        typedef Section [
+            @required str name
+            @required str content
+        ]
+
+        @rest(method=GET)
+        list<SciPaper> listSciPapers()
+    }
+}
+
+
+dependency SciPaper -> User {
+    isLoggedIn[fallback_static]
+    getName[fallback_static]
+}

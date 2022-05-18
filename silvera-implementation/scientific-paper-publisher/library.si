@@ -1,0 +1,18 @@
+import "setup.si"
+
+service Library {
+    service_registry=ServiceRegistry
+
+    api {
+
+        @crud
+        typedef Publication [
+            @required str sciPaperId
+            @required str title
+            @required str author
+        ]
+
+        @rest(method=GET)
+        list<Publication> listPublications()
+    }
+}
