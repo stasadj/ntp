@@ -1,0 +1,16 @@
+msg-pool {
+
+    group PublicationMsgGroup [
+
+        msg PaperPublished [
+            @required str sciPaperId
+            @required str title
+            @required str author
+        ]
+    ]
+}
+
+msg-broker Broker {
+
+    channel PUBLISH_PAPER(PublicationMsgGroup.PaperPublished)
+}

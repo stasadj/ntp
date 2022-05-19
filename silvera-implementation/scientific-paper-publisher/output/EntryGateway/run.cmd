@@ -1,5 +1,8 @@
 REM script for running the application
 
+@echo off
+Title Entry Gateway
+
 call mvn clean
 @echo on
 

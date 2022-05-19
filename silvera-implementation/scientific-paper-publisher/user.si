@@ -15,8 +15,16 @@ service User {
             str email
         ]
 
+        typedef LoginInfo [
+            @id str username
+            @required str password
+        ]
+
         @rest(method=POST)
-        User logIn(str username, str password)
+        str logIn(LoginInfo loginInfo)
+
+        @rest(method=GET)
+        str logOut(str username)
 
         @rest(method=GET)
         bool isLoggedIn(str username)

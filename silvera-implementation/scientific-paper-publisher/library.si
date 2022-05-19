@@ -5,7 +5,6 @@ service Library {
 
     api {
 
-        @crud
         typedef Publication [
             @required str sciPaperId
             @required str title
@@ -14,5 +13,10 @@ service Library {
 
         @rest(method=GET)
         list<Publication> listPublications()
+
+        internal {
+            @consumer(PublicationMsgGroup.PaperPublished <- Broker.PUBLISH_PAPER)
+            void publicationCreated()
+        }
     }
 }

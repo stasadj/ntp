@@ -55,7 +55,7 @@ public class UserService implements IUserService {
     @Override
     public User readUser(java.lang.String id){
         Optional<User> opt = userRepository.findById(id);
-        return opt.orElseThrow(IllegalArgumentException::new);
+        return opt.orElse(null);
     }
 
     @Override
@@ -69,31 +69,40 @@ public class UserService implements IUserService {
     
     
     @Override
-    public User logIn(java.lang.String username, java.lang.String password) {
-        /*
-            TODO: Implement this function!!!
-        */
-        throw new java.lang.UnsupportedOperationException("Not implemented yet.");
+    public java.lang.String logIn(LoginInfo loginInfo){
+        User user = userRepository.findByUsernameAndPassword(loginInfo.getUsername(), loginInfo.getPassword());
+        if (user != null) {
+            user.setLoggedIn(true);
+            userRepository.save(user);
+            return loginInfo.getUsername();
+        }
+        return null;
+    }
+    
+    @Override
+    public java.lang.String logOut(java.lang.String username){
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            user.setLoggedIn(false);
+            userRepository.save(user);
+            return username;
+        }
+        return null;
     }
     
     
     
     @Override
     public java.lang.Boolean isLoggedIn(java.lang.String username) {
-        /*
-            TODO: Implement this function!!!
-        */
-        throw new java.lang.UnsupportedOperationException("Not implemented yet.");
+        return this.readUser(username).getLoggedIn();
     }
     
     
     
     @Override
     public java.lang.String getName(java.lang.String username) {
-        /*
-            TODO: Implement this function!!!
-        */
-        throw new java.lang.UnsupportedOperationException("Not implemented yet.");
+       User user = this.readUser(username);
+       return user.getFirstName() + ", " + user.getLastName();
     }
     
 

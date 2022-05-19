@@ -71,6 +71,15 @@
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 			<version>2.2.10.RELEASE</version>
 		</dependency>
+		
+		<!-- Primarily used for quickly restarting the server during development 
+            without waiting for the spring application to reboot completely. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
 	</dependencies>
 
 	<dependencyManagement>

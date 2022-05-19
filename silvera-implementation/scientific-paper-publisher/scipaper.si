@@ -11,6 +11,7 @@ service SciPaper {
             @required str author
             @required str title
             @required list<Section> sections
+            bool published
         ]
 
         typedef Section [
@@ -19,7 +20,11 @@ service SciPaper {
         ]
 
         @rest(method=GET)
-        list<SciPaper> listSciPapers()
+        list<SciPaper> listSciPapers(str author)
+
+        @rest(method=GET)
+        @producer(PublicationMsgGroup.PaperPublished -> Broker.PUBLISH_PAPER)
+        SciPaper publish(str sciPaperId)
     }
 }
 
