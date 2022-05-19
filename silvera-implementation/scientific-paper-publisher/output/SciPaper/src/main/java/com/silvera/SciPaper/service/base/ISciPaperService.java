@@ -19,7 +19,7 @@ public interface ISciPaperService {
     
     
     
-    public SciPaper createSciPaper(SciPaper scipaper);
+    public SciPaper createSciPaper(SciPaper scipaper) throws java.lang.Exception;
     
     
     public SciPaper updateSciPaper(java.lang.String id, SciPaper scipaperUpdate);
@@ -33,9 +33,9 @@ public interface ISciPaperService {
     
 
     
-    public java.util.List<SciPaper> listSciPapers(java.lang.String author);
+    public java.util.List<SciPaper> listSciPapers(java.lang.String author) throws java.lang.Exception;
     
-    public SciPaper publish(java.lang.String sciPaperId);
+    public SciPaper publish(java.lang.String sciPaperId) throws java.lang.Exception;
     
 
     

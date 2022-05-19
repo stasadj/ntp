@@ -38,7 +38,7 @@ public class SciPaperController {
     
     @RequestMapping(value="/scipaper", method=RequestMethod.POST)
     @ResponseBody
-    public SciPaper createSciPaper(@Valid @RequestBody SciPaper scipaper){
+    public SciPaper createSciPaper(@Valid @RequestBody SciPaper scipaper) throws java.lang.Exception{
         return sciPaperService.createSciPaper(scipaper);
     }
     
@@ -74,7 +74,7 @@ public class SciPaperController {
     @GetMapping(value="listscipapers/{author}")
 
 
-    public java.util.List<SciPaper> listSciPapers(@PathVariable java.lang.String author){
+    public java.util.List<SciPaper> listSciPapers(@PathVariable java.lang.String author) throws java.lang.Exception{
         
         return sciPaperService.listSciPapers(author);
 
@@ -85,7 +85,7 @@ public class SciPaperController {
     @GetMapping(value="publish/{sciPaperId}")
 
 
-    public SciPaper publish(@PathVariable java.lang.String sciPaperId){
+    public SciPaper publish(@PathVariable java.lang.String sciPaperId) throws java.lang.Exception{
         
         return sciPaperService.publish(sciPaperId);
 

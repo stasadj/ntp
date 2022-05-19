@@ -41,11 +41,11 @@ public class SciPaperService implements ISciPaperService {
     // Auto-generated CRUD methods
     
     @Override
-    public SciPaper createSciPaper(SciPaper scipaper){
+    public SciPaper createSciPaper(SciPaper scipaper) throws java.lang.Exception{
         if (userClient.isLoggedIn(scipaper.getAuthor())) {
             scipaperRepository.save(scipaper);
         } else {
-            return null;
+            throw new Exception("User is not logged in.");
         }
 
         
@@ -88,32 +88,38 @@ public class SciPaperService implements ISciPaperService {
 
     
     @Override
-    public java.util.List<SciPaper> listSciPapers(java.lang.String author){
+    public java.util.List<SciPaper> listSciPapers(java.lang.String author) throws java.lang.Exception{
         if (userClient.isLoggedIn(author)) {
             return scipaperRepository.findAllByAuthor(author);
         } else {
-            return null;
+            throw new Exception("User is not logged in.");
         }
     }
     
     @Override
-    public SciPaper publish(java.lang.String sciPaperId){
+    public SciPaper publish(java.lang.String sciPaperId) throws java.lang.Exception{
         // Uncomment to publish the message
         com.silvera.SciPaper.messages.publicationmsggroup.PaperPublished msg = new com.silvera.SciPaper.messages.publicationmsggroup.PaperPublished();
+        
+        SciPaper paper = this.readSciPaper(sciPaperId);
+        if (paper == null) {
+            throw new Exception("Scientific paper with given id does not exist.");
+        }
         // Here set values to the message attributes:
         // ------------------------------------------
-        SciPaper paper = this.readSciPaper(sciPaperId);
         msg.setSciPaperId(sciPaperId);
         msg.setTitle(paper.getTitle());
         msg.setAuthor(userClient.getName(paper.getAuthor()));
         // ------------------------------------------
+        
         if (userClient.isLoggedIn(paper.getAuthor())) {
             paper.setPublished(true);
             scipaperRepository.save(paper);
             publicationmsggroupPaperPublishedKafkaTemplate.send("PUBLISH_PAPER", msg);
             return paper;
-        } 
-        return null;
+        } else {
+           throw new Exception("User is not logged in.");
+        }
     }
     
 
