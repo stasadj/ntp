@@ -107,10 +107,13 @@ public class SciPaperService implements ISciPaperService {
         msg.setTitle(paper.getTitle());
         msg.setAuthor(userClient.getName(paper.getAuthor()));
         // ------------------------------------------
-        paper.setPublished(true);
-        scipaperRepository.save(paper);
-        publicationmsggroupPaperPublishedKafkaTemplate.send("PUBLISH_PAPER", msg);
-        return paper;
+        if (userClient.isLoggedIn(paper.getAuthor())) {
+            paper.setPublished(true);
+            scipaperRepository.save(paper);
+            publicationmsggroupPaperPublishedKafkaTemplate.send("PUBLISH_PAPER", msg);
+            return paper;
+        } 
+        return null;
     }
     
 
