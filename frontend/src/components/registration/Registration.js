@@ -56,7 +56,7 @@ const Registration = () => {
       firstName: '',
       lastName: '',
       email: '',
-      loggedIn: false,
+      loggedIn: true,
     },
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
