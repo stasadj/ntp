@@ -1,7 +1,9 @@
 import py_eureka_client.eureka_client as eureka_client
 
-from kombu import Connection, Exchange
-from yosun import Yosun
+import json
+import redis
+
+redis_client = redis.StrictRedis(host='localhost', port=6379, db=1)
 
 
 def is_author_logged_in(author):
@@ -12,14 +14,14 @@ def is_author_logged_in(author):
         return False
 
 
-def publish_paper(id, title, author):
-    # Define Connection
-    connection = Connection('amqp://guest:guest@localhost:5672//')
+def get_name(author):
+    try:
+        res = eureka_client.do_service('User', '/getname/' + author)
+        return res
+    except Exception:
+        return ''
 
-    # RabbitMQ Exchange definition
-    exchange = Exchange('events', type='topic')
 
-    # Yosun initialize
-    yosun = Yosun(connection, exchange)
+def publish_paper(sci_paper_id, title, author):
+    redis_client.publish('scipaper.publish', json.dumps({'sciPaperId': sci_paper_id, 'title': title, 'author': author}))
 
-    yosun.publish('scipapers.publish', {'sciPaperId': id, 'title': title, author: 'author'})

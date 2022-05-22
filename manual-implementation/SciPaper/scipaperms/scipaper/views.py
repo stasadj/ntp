@@ -19,7 +19,7 @@ class SciPaperCreateAPIView(CreateAPIView):
     def create(self, request, *args, **kwargs):
         if is_author_logged_in(request.data['author']):
             return super().create(request, *args, **kwargs)
-        raise Exception('Usre is not logged in.')
+        raise Exception('User is not logged in.')
 
 
 @api_view(http_method_names=['GET'])

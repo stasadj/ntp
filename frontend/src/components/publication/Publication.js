@@ -3,7 +3,6 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from 'react-bootstrap/ListGroupItem';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 
 const Publication = ({ publication }) => {
@@ -15,7 +14,7 @@ const Publication = ({ publication }) => {
       </Card.Body>
       <ListGroup className="list-group-flush" style={{ fontSize: '75%' }}>
         <ListGroupItem style={{ textAlign: 'left' }}>
-          <b>ID: </b> {publication.id}
+          <b>ID: </b> {publication.sciPaperId}
         </ListGroupItem>
         <ListGroupItem style={{ textAlign: 'left' }}>
           <b>Author: </b> {publication.author}

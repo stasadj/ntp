@@ -1,6 +1,6 @@
 from django.db import models
 
-from .utils import is_author_logged_in, publish_paper
+from .utils import is_author_logged_in, publish_paper, get_name
 
 
 # Create your models here.
@@ -14,7 +14,7 @@ class SciPaper(models.Model):
         if is_author_logged_in(author):
             queryset = cls.objects.all()
             return queryset.filter(author=author)
-        raise Exception('Usre is not logged in.')
+        raise Exception('User is not logged in.')
 
     @classmethod
     def publish(cls, sci_paper_id):
@@ -22,10 +22,11 @@ class SciPaper(models.Model):
         sci_paper = queryset.get(id=sci_paper_id)
         if is_author_logged_in(sci_paper.author):
             sci_paper.published = True
-            #publish_paper(sci_paper.id, sci_paper.title, sci_paper.author)
+            name = get_name(sci_paper.author)
+            publish_paper(sci_paper.id, sci_paper.title, name)
             sci_paper.save()
             return sci_paper
-        raise Exception('Usre is not logged in.')
+        raise Exception('User is not logged in.')
 
 
 class Section(models.Model):
