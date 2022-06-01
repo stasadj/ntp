@@ -1,0 +1,6 @@
+REM script for running the application
+
+@echo off
+Title Entry Gateway
+
+java -jar --add-opens java.base/java.lang=ALL-UNNAMED target\EntryGateway-0.0.1-SNAPSHOT.jar --PORT=9095
